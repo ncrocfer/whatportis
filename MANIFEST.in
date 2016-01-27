@@ -1,2 +1,1 @@
-include *.txt
-include whatportis/ports.db
+include requirements.txt whatportis/ports.db README.rst LICENSE.txt test_whatportis.py
