@@ -1,5 +1,5 @@
-whatportis - A command to search port names and numbers
-=======================================================
+Whatportis: a command to search port names and numbers
+======================================================
 
 It often happens that we need to find the default port number for a specific service, or what service is listening on a given port.
 
@@ -41,7 +41,7 @@ Installation
 Notes
 -----
 
-- You can search a pattern without knowing the exact name by adding the `--like` option :
+- You can search a pattern without knowing the exact name by adding the :code:`--like` option :
 
 .. code-block:: shell
 
@@ -62,4 +62,6 @@ Notes
     | mysqlx         | 33060 |   tcp    | MySQL Database Extended Interface |
     +----------------+-------+----------+-----------------------------------+
 
-- `whatportis` uses the `Iana.org <http://www.iana.org/assignments/port-numbers>`_ website to get the official list of ports.
+- "Why not use :code:`grep <port> /etc/services`" ? Simply because I want a portable command that display the output in a nice format (a pretty table).
+
+- The tool uses the `Iana.org <http://www.iana.org/assignments/port-numbers>`_ website to get the official list of ports. A private script has been created to fetch regularly the website and update the **ports.db** file. For this reason, an :code:`update` command will be created in a future version.
