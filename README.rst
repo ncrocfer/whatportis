@@ -1,6 +1,9 @@
 Whatportis: a command to search port names and numbers
 ======================================================
 
+.. image:: https://travis-ci.org/ncrocfer/whatportis.svg?branch=master
+    :target: https://travis-ci.org/ncrocfer/whatportis
+
 It often happens that we need to find the default port number for a specific service, or what service is listening on a given port.
 
 Usage
