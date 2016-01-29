@@ -67,6 +67,7 @@ def get_table(ports):
 
 
 @click.command()
+@click.version_option()
 @click.argument('PORT', required=True, callback=valid_port)
 @click.option('--like', is_flag=True, default=False,
               help='Search ports containing the pattern.')
