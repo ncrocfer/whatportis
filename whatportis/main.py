@@ -41,10 +41,9 @@ def get_ports(port, like=False):
     cursor = conn.cursor()
 
     where_field = "port" if isinstance(port, int) else "name"
-    where_value = " LIKE '%{}%'".format(port) if like else "='{}'".format(port)
+    where_value = "%{}%".format(port) if like else port
 
-    sql = BASE_SQL + where_field + where_value
-    cursor.execute(sql)
+    cursor.execute(BASE_SQL + where_field + " LIKE ?", (where_value,))
 
     return cursor
 
