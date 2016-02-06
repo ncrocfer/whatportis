@@ -67,4 +67,24 @@ Notes
 
 - "Why not use :code:`grep <port> /etc/services`" ? Simply because I want a portable command that display the output in a nice format (a pretty table).
 
+- You can also display the results as JSON, using the :code:`--json` option:
+
+.. code-block:: shell
+
+    $ whatportis 5432 --json
+    [
+        {
+            "description": "PostgreSQL Database",
+            "protocol": "tcp",
+            "name": "postgresql",
+            "port": "5432"
+        },
+        {
+            "description": "PostgreSQL Database",
+            "protocol": "udp",
+            "name": "postgresql",
+            "port": "5432"
+        }
+    ]
+
 - The tool uses the `Iana.org <http://www.iana.org/assignments/port-numbers>`_ website to get the official list of ports. A private script has been created to fetch regularly the website and update the **ports.db** file. For this reason, an :code:`update` command will be created in a future version.
