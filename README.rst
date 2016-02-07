@@ -32,6 +32,58 @@ Or, conversely, what service is associated with a port number :
     | postgresql | 5432 |   udp    | PostgreSQL Database |
     +------------+------+----------+---------------------+
 
+Or, start whatportis as a RESTful API server:
+
+.. code-block:: shell
+
+   $ whatportis --server localhost 8080
+    * Running on http://localhost:8080/ (Press CTRL+C to quit)
+
+   $ curl http://localhost:8080/ports
+   "ports": [
+     {
+       "description": "Description",
+       "name": "Service Name",
+       "port": "Port Number",
+       "protocol": "Transport Protocol"
+     },
+   ...
+
+   $ curl http://localhost:8080/ports/3306
+   {
+     "ports": [
+       [
+         "mysql",
+         "3306",
+         "tcp",
+         "MySQL"
+       ],
+       [
+         "mysql",
+         "3306",
+         "udp",
+         "MySQL"
+       ]
+     ]
+   }
+
+   $ curl http://localhost:8080/ports/mysql\?like
+   {
+     "ports": [
+       [
+         "mysql-cluster",
+         "1186",
+         "tcp",
+         "MySQL Cluster Manager"
+       ],
+       [
+         "mysql-cluster",
+         "1186",
+         "udp",
+         "MySQL Cluster Manager"
+       ],
+       ...
+
 
 Installation
 ------------
