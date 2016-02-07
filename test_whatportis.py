@@ -3,7 +3,7 @@ import re
 
 import click
 from click.testing import CliRunner
-from whatportis.main import run
+from whatportis.__main__ import run
 
 
 class WhatportisTestCase(unittest.TestCase):

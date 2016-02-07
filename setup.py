@@ -2,7 +2,7 @@ from setuptools import setup
 
 entry_points = {
     'console_scripts': [
-        'whatportis=whatportis.main:run',
+        'whatportis=whatportis.__main__:run',
     ]
 }
 requirements = open('requirements.txt').read()
