@@ -7,14 +7,16 @@
 """
 
 import os
-import sqlite3
+from tinydb import TinyDB, where
+from tinydb.storages import JSONStorage
+from tinydb.middlewares import CachingMiddleware
 from collections import namedtuple
 
-__BASE_PATH__ = os.path.dirname(os.path.abspath(__file__))
-__DATABASE_PATH__ = os.path.join(__BASE_PATH__, 'ports.db')
-__BASE_SQL__ = "SELECT name, port, protocol, description FROM ports WHERE "
-
 Port = namedtuple("Port", ["name", "port", "protocol", "description"])
+
+__BASE_PATH__ = os.path.dirname(os.path.abspath(__file__))
+__DATABASE_PATH__ = os.path.join(__BASE_PATH__, 'ports.json')
+__DB__ = TinyDB(__DATABASE_PATH__, storage=CachingMiddleware(JSONStorage))
 
 
 def get_ports(port, like=False):
@@ -27,11 +29,10 @@ def get_ports(port, like=False):
     :return: all ports matching the given ``port``
     :rtype: list
     """
-    conn = sqlite3.connect(__DATABASE_PATH__)
-    cursor = conn.cursor()
+    where_field = "port" if port.isdigit() else "name"
+    if like:
+        ports = __DB__.search(where(where_field).search(port))
+    else:
+        ports = __DB__.search(where(where_field) == port)
 
-    where_field = "port" if isinstance(port, int) else "name"
-    where_value = "%{}%".format(port) if like else port
-
-    cursor.execute(__BASE_SQL__ + where_field + " LIKE ?", (where_value,))
-    return [Port(*row) for row in cursor]
+    return [Port(**port) for port in ports]
