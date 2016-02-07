@@ -1,13 +1,13 @@
-import os
-import sqlite3
+# -*- coding: utf-8 -*-
+
+"""
+    command line interface for whatportis application.
+"""
 
 import click
 from prettytable import PrettyTable
 
-
-BASE_PATH = os.path.dirname(os.path.abspath(__file__))
-DATABASE_PATH = os.path.join(BASE_PATH, 'ports.db')
-BASE_SQL = "SELECT name, port, protocol, description FROM ports WHERE "
+from .core import get_ports
 
 
 def valid_port(ctx, param, value):
@@ -28,26 +28,6 @@ def valid_port(ctx, param, value):
     return value
 
 
-def get_ports(port, like=False):
-    """
-    This function creates the SQL query depending on the specified port and
-    the --like option.
-
-    :param port: the specified port
-    :param like: the --like option
-    :return: the sqlite3 cursor
-    """
-    conn = sqlite3.connect(DATABASE_PATH)
-    cursor = conn.cursor()
-
-    where_field = "port" if isinstance(port, int) else "name"
-    where_value = "%{}%".format(port) if like else port
-
-    cursor.execute(BASE_SQL + where_field + " LIKE ?", (where_value,))
-
-    return cursor
-
-
 def get_table(ports):
     """
     This function returns a pretty table used to display the port results.
@@ -60,8 +40,8 @@ def get_table(ports):
     table.align["Description"] = "l"
     table.padding_width = 1
 
-    for p in ports:
-        table.add_row(p)
+    for port in ports:
+        table.add_row(port)
 
     return table
 
