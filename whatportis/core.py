@@ -36,21 +36,3 @@ def get_ports(port, like=False):
         ports = __DB__.search(where(where_field) == port)
 
     return [Port(**port) for port in ports]
-
-
-def get_dict(ports):
-    """
-    This function returns a list of dict displaying the port results.
-
-    :param ports: list of found ports
-    :return: a list of dict containing all result ports
-    """
-    return [
-        {
-            'name': port.name,
-            'port': port.port,
-            'protocol': port.protocol,
-            'description': port.description
-        }
-        for port in ports
-    ]
