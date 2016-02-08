@@ -1,1 +1,1 @@
-include requirements.txt whatportis/ports.db README.rst LICENSE.txt test_whatportis.py
+include requirements.txt whatportis/ports.json README.rst LICENSE.txt test_whatportis.py
