@@ -4,12 +4,12 @@ Whatportis: a command to search port names and numbers
 .. image:: https://travis-ci.org/ncrocfer/whatportis.svg?branch=master
     :target: https://travis-ci.org/ncrocfer/whatportis
 
-It often happens that we need to find the default port number for a specific service, or what service is listening on a given port.
+It often happens that we need to find the default port number for a specific service, or what service is normally listening on a given port.
 
 Usage
 -----
 
-This tool allows you to find what port is associated with a service :
+This tool allows you to find what port is associated with a service:
 
 .. code-block:: shell
 
@@ -20,7 +20,7 @@ This tool allows you to find what port is associated with a service :
     | redis | 6379 |   tcp    | An advanced key-value cache and store |
     +-------+------+----------+---------------------------------------+
 
-Or, conversely, what service is associated with a port number :
+Or, conversely, what service is associated with a port number:
 
 .. code-block:: shell
 
@@ -32,71 +32,7 @@ Or, conversely, what service is associated with a port number :
     | postgresql | 5432 |   udp    | PostgreSQL Database |
     +------------+------+----------+---------------------+
 
-Or, start whatportis as a RESTful API server:
-
-.. code-block:: shell
-
-   $ whatportis --server localhost 8080
-    * Running on http://localhost:8080/ (Press CTRL+C to quit)
-
-   $ curl http://localhost:8080/ports
-   "ports": [
-     {
-       "description": "Description",
-       "name": "Service Name",
-       "port": "Port Number",
-       "protocol": "Transport Protocol"
-     },
-   ...
-
-   $ curl http://localhost:8080/ports/3306
-   {
-     "ports": [
-       [
-         "mysql",
-         "3306",
-         "tcp",
-         "MySQL"
-       ],
-       [
-         "mysql",
-         "3306",
-         "udp",
-         "MySQL"
-       ]
-     ]
-   }
-
-   $ curl http://localhost:8080/ports/mysql\?like
-   {
-     "ports": [
-       [
-         "mysql-cluster",
-         "1186",
-         "tcp",
-         "MySQL Cluster Manager"
-       ],
-       [
-         "mysql-cluster",
-         "1186",
-         "udp",
-         "MySQL Cluster Manager"
-       ],
-       ...
-
-
-Installation
-------------
-
-.. code-block:: shell
-
-    $ pip install whatportis
-
-
-Notes
------
-
-- You can search a pattern without knowing the exact name by adding the :code:`--like` option :
+You can also search a pattern without knowing the exact name by adding the :code:`--like` option:
 
 .. code-block:: shell
 
@@ -117,9 +53,17 @@ Notes
     | mysqlx         | 33060 |   tcp    | MySQL Database Extended Interface |
     +----------------+-------+----------+-----------------------------------+
 
-- "Why not use :code:`grep <port> /etc/services`" ? Simply because I want a portable command that display the output in a nice format (a pretty table).
+Installation
+------------
 
-- You can also display the results as JSON, using the :code:`--json` option:
+.. code-block:: shell
+
+    $ pip install whatportis
+
+JSON output
+-----------
+
+You can display the results as JSON, using the :code:`--json` option :
 
 .. code-block:: shell
 
@@ -138,5 +82,68 @@ Notes
             "port": "5432"
         }
     ]
+
+REST API
+--------
+
+Whatportis can also be started as a RESTful API server:
+
+.. code-block:: shell
+
+    $ whatportis --server localhost 8080
+     * Running on http://localhost:8080/ (Press CTRL+C to quit)
+
+    $ curl http://localhost:8080/ports
+    "ports": [
+      {
+        "description": "Description",
+        "name": "Service Name",
+        "port": "Port Number",
+        "protocol": "Transport Protocol"
+      },
+      ...
+    ]
+   
+
+    $ curl http://localhost:8080/ports/3306
+    {
+      "ports": [
+        [
+          "mysql",
+          "3306",
+          "tcp",
+          "MySQL"
+        ],
+        [
+          "mysql",
+          "3306",
+          "udp",
+          "MySQL"
+        ]
+      ]
+    }
+
+    $ curl http://localhost:8080/ports/mysql?like
+    {
+      "ports": [
+        [
+          "mysql-cluster",
+          "1186",
+          "tcp",
+          "MySQL Cluster Manager"
+        ],
+        [
+          "mysql-cluster",
+          "1186",
+          "udp",
+          "MySQL Cluster Manager"
+        ],
+        ...
+    }
+
+Notes
+-----
+
+- "Why not use :code:`grep <port> /etc/services`" ? Simply because I want a portable command that display the output in a nice format (a pretty table).
 
 - The tool uses the `Iana.org <http://www.iana.org/assignments/port-numbers>`_ website to get the official list of ports. A private script has been created to fetch regularly the website and update the **ports.json** file. For this reason, an :code:`update` command will be created in a future version.
