@@ -6,11 +6,11 @@
 
 import sys
 import click
-import json
+import simplejson as json
 
 from prettytable import PrettyTable
 
-from .core import get_ports, get_dict
+from .core import get_ports
 from .server import app
 
 
@@ -56,7 +56,7 @@ def run(port, like, use_json, server):
         return
 
     if use_json:
-        print(json.dumps(get_dict(ports), indent=4))
+        print(json.dumps(ports, indent=4))
     else:
         table = get_table(ports)
         print(table)
