@@ -5,9 +5,11 @@
 """
 
 import click
+import json as jsonmod
+
 from prettytable import PrettyTable
 
-from .core import get_ports
+from .core import get_ports, get_dict
 
 
 def get_table(ports):
@@ -33,11 +35,15 @@ def get_table(ports):
 @click.argument('PORT', required=True)
 @click.option('--like', is_flag=True, default=False,
               help='Search ports containing the pattern.')
-def run(port, like):
+@click.option('--json', is_flag=True, default=False,
+              help='Format the output result as JSON.')
+def run(port, like, json):
     """Search port names and numbers."""
     ports = get_ports(port, like)
     if not ports:
         print("No ports found for '{0}'".format(port))
+    if json:
+        print(jsonmod.dumps(get_dict(ports), indent=4))
     else:
         table = get_table(ports)
         print(table)
