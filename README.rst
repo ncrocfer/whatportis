@@ -87,4 +87,4 @@ Notes
         }
     ]
 
-- The tool uses the `Iana.org <http://www.iana.org/assignments/port-numbers>`_ website to get the official list of ports. A private script has been created to fetch regularly the website and update the **ports.db** file. For this reason, an :code:`update` command will be created in a future version.
+- The tool uses the `Iana.org <http://www.iana.org/assignments/port-numbers>`_ website to get the official list of ports. A private script has been created to fetch regularly the website and update the **ports.json** file. For this reason, an :code:`update` command will be created in a future version.
