@@ -30,7 +30,8 @@ class WhatportisTestCase(unittest.TestCase):
         self.assertTrue("redis" in result.output)
         self.assertTrue("6379" in result.output)
         self.assertTrue("tcp" in result.output)
-        self.assertTrue("An advanced key-value cache and store" in result.output)
+        output = "An advanced key-value cache and store"
+        self.assertTrue(output in result.output)
 
     def test_search_int_port(self):
         result = self.runner.invoke(run, ['3306'])

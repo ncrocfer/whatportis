@@ -11,6 +11,7 @@ from .core import __DB__, get_ports
 
 app = Flask(__name__)
 
+
 @app.route("/ports", methods=["GET"])
 def all_ports():
     """Returns all ports"""

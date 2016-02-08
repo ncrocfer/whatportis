@@ -35,4 +35,4 @@ def get_ports(port, like=False):
     else:
         ports = __DB__.search(where(where_field) == port)
 
-    return [Port(**port) for port in ports]
+    return [Port(**port) for port in ports] # flake8: noqa (F812)
