@@ -19,6 +19,25 @@ __DATABASE_PATH__ = os.path.join(__BASE_PATH__, 'ports.json')
 __DB__ = TinyDB(__DATABASE_PATH__, storage=CachingMiddleware(JSONStorage))
 
 
+def merge_protocols(ports=[]):
+    """
+    This function merge rows having the exact same data (port, name,
+    description) but a different protocol.
+
+    :param ports: the list of ports
+    :return: all ports with merged protocols
+    :rtype: list
+    """
+    keys = {}
+    for port in ports:
+        key = "{}-{}-{}".format(port.get("description"), port.get("name"), port.get("port"))
+        if key not in keys:
+            keys[key] = port
+        else:
+            keys[key]["protocol"] += ", {}".format(port.get("protocol"))
+    return list(keys.values())
+
+
 def get_ports(port, like=False):
     """
     This function creates the SQL query depending on the specified port and
@@ -35,4 +54,5 @@ def get_ports(port, like=False):
     else:
         ports = __DB__.search(where(where_field) == port)
 
+    ports = merge_protocols(ports)
     return [Port(**port) for port in ports] # flake8: noqa (F812)
