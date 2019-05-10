@@ -19,6 +19,12 @@ setup(
     packages=['whatportis'],
     include_package_data=True,
     install_requires=requirements,
+    extras_require={
+        "dev": [
+            "pytest",
+            "tox"
+        ]
+    },
     entry_points=entry_points,
     classifiers=(
         'Development Status :: 5 - Production/Stable',
