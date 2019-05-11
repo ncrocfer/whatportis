@@ -5,7 +5,6 @@ entry_points = {
         'whatportis=whatportis.cli:run',
     ]
 }
-requirements = open('requirements.txt').read()
 readme = open('README.rst').read()
 
 setup(
@@ -18,11 +17,20 @@ setup(
     long_description=readme,
     packages=['whatportis'],
     include_package_data=True,
-    install_requires=requirements,
+    install_requires=[
+        "simplejson",
+        "tinydb",
+        "requests",
+        "prettytable",
+        "click"
+    ],
     extras_require={
         "dev": [
             "pytest",
             "tox"
+        ],
+        "server": [
+            "flask"
         ]
     },
     entry_points=entry_points,

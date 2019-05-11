@@ -9,7 +9,6 @@ import simplejson as json
 from tinydb import TinyDB
 
 from whatportis.db import get_database, get_ports
-from whatportis.server import app
 from whatportis.utils import as_table
 
 
@@ -54,6 +53,15 @@ def update_db(ctx, param, value):
     ctx.exit()
 
 
+# Change the server help if flask is installed
+server_help = "Start a RESTful server"
+try:
+    import flask
+    server_help += " (format <host> <port>)."
+except ImportError:
+    server_help += " (requires Flask)."
+
+
 @click.command()
 @click.version_option()
 @click.argument('PORT', required=False)
@@ -61,8 +69,8 @@ def update_db(ctx, param, value):
               help='Search ports containing the pattern.')
 @click.option('--json', "use_json", is_flag=True, default=False,
               help='Format the output result as JSON.')
-@click.option("--server", type=(str, int), default=(None, None),
-              help="Start a RESTful server (Format <host> <port>).")
+@click.option("--server", default=[None] * 2, type=click.Tuple([str, int]),
+              help=server_help)
 @click.option("--update", is_flag=True, callback=update_db,
               expose_value=False, is_eager=True)
 def run(port, like, use_json, server):
@@ -71,7 +79,11 @@ def run(port, like, use_json, server):
         raise click.UsageError("Please specify a port")
 
     if server[0]:
-        app.run(host=server[0], port=server[1])
+        try:
+            from whatportis.server import app
+            app.run(host=server[0], port=server[1])
+        except ImportError:
+            click.echo("Dependencies are missing, please use `pip install whatportis[server]`.")
         return
 
     ports = get_ports(port, like)

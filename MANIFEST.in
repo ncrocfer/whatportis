@@ -1,1 +1,3 @@
-include requirements.txt whatportis/ports.json README.rst LICENSE.txt test_whatportis.py
+include README.rst LICENSE.txt tox.ini
+
+graft tests
