@@ -1,22 +1,18 @@
 # -*- coding: utf-8 -*-
 
-"""
-    Provides functionality to search a port
-    database for specific applications and
-    their ports.
-"""
-
 import os
 from tinydb import TinyDB, where
 from tinydb.storages import JSONStorage
 from tinydb.middlewares import CachingMiddleware
 from collections import namedtuple
 
+
 Port = namedtuple("Port", ["name", "port", "protocol", "description"])
 
-__BASE_PATH__ = os.path.dirname(os.path.abspath(__file__))
-__DATABASE_PATH__ = os.path.join(__BASE_PATH__, 'ports.json')
-__DB__ = TinyDB(__DATABASE_PATH__, storage=CachingMiddleware(JSONStorage))
+
+def get_database():
+    path = os.path.join(os.path.expanduser('~'), ".whatportis_db.json")
+    return TinyDB(path, storage=CachingMiddleware(JSONStorage))
 
 
 def merge_protocols(ports=[]):
@@ -49,10 +45,12 @@ def get_ports(port, like=False):
     :rtype: list
     """
     where_field = "port" if port.isdigit() else "name"
+    db = get_database()
+
     if like:
-        ports = __DB__.search(where(where_field).search(port))
+        ports = db.search(where(where_field).search(port))
     else:
-        ports = __DB__.search(where(where_field) == port)
+        ports = db.search(where(where_field) == port)
 
     ports = merge_protocols(ports)
     return [Port(**port) for port in ports] # flake8: noqa (F812)

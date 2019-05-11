@@ -1,4 +1,4 @@
-from whatportis.core import merge_protocols
+from whatportis.db import merge_protocols
 
 
 def test_merge_protocols_different_ports():

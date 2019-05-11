@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
-    This module provides a simple RESTful
-    server API for whatportis.
-"""
-
 from flask import Flask, request, jsonify
 
-from .core import __DB__, get_ports
+from whatportis.db import get_database, get_ports
+
 
 app = Flask(__name__)
 
@@ -15,7 +11,7 @@ app = Flask(__name__)
 @app.route("/ports", methods=["GET"])
 def all_ports():
     """Returns all ports"""
-    return jsonify({"ports": __DB__.all()})
+    return jsonify({"ports": get_database().all()})
 
 
 @app.route("/ports/<pattern>", methods=["GET"])
