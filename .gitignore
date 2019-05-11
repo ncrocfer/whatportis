@@ -1,7 +1,21 @@
+# Python
 *.pyc
 __pycache__/
 dist
 build
 *.egg-info
-.idea
+
+# virtualenv
+.venv*
+venv*
+ENV/
+
+# Tox
 .tox
+
+# PyCharm
+.idea/
+*.iml
+
+# Visual Studio Code
+.vscode/
