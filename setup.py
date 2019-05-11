@@ -9,7 +9,7 @@ readme = open('README.rst').read()
 
 setup(
     name="whatportis",
-    version="0.6",
+    version="0.7",
     url='http://github.com/ncrocfer/whatportis',
     author='Nicolas Crocfer',
     author_email='ncrocfer@gmail.com',
