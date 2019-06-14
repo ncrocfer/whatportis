@@ -8,11 +8,15 @@ from collections import namedtuple
 
 
 Port = namedtuple("Port", ["name", "port", "protocol", "description"])
+path = os.path.join(os.path.expanduser("~"), ".whatportis_db.json")
 
 
 def get_database():
-    path = os.path.join(os.path.expanduser("~"), ".whatportis_db.json")
     return TinyDB(path, storage=CachingMiddleware(JSONStorage))
+
+
+def database_exists():
+    return os.path.isfile(path)
 
 
 def merge_protocols(ports=[]):

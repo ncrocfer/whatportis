@@ -9,7 +9,7 @@ import requests
 import simplejson as json
 from tinydb import TinyDB
 
-from whatportis.db import get_database, get_ports
+from whatportis.db import database_exists, get_database, get_ports
 from whatportis.utils import as_table
 
 
@@ -40,19 +40,7 @@ def csv_reader(data):
     return unicode_csv_reader(data)
 
 
-def update_db(ctx, param, value):
-    """
-    This callback downloads the official CSV file provided by IANA,
-    parses it and populates the database as a JSON file.
-    """
-    if not value or ctx.resilient_parsing:
-        return
-
-    # Check if the file exists
-    if not click.confirm("Previous database will be updated, do you want to continue?"):
-        click.echo("Bye.")
-        ctx.exit()
-
+def populate_db():
     # Download the csv
     click.echo("Downloading {}...".format(IANA_CSV_FILE))
     resp = requests.get(IANA_CSV_FILE).content.decode("utf-8")
@@ -77,6 +65,22 @@ def update_db(ctx, param, value):
     db.close()
 
     click.echo("{} ports imported.".format(len(ports)))
+
+
+def update_db(ctx, param, value):
+    """
+    This callback downloads the official CSV file provided by IANA,
+    parses it and populates the database as a JSON file.
+    """
+    if not value or ctx.resilient_parsing:
+        return
+
+    # Check if the file exists
+    if not click.confirm("Previous database will be updated, do you want to continue?"):
+        click.echo("Bye.")
+        ctx.exit()
+
+    populate_db()
     ctx.exit()
 
 
@@ -113,6 +117,11 @@ def run(port, like, use_json, server):
     """Search port names and numbers."""
     if not port and not server[0]:
         raise click.UsageError("Please specify a port")
+
+    # Check if database exists
+    if not database_exists():
+        click.echo("Database not found, doing first import...")
+        populate_db()
 
     if server[0]:
         try:

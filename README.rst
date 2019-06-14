@@ -68,7 +68,10 @@ Installation
 
     $ pip install whatportis
 
-Whatportis uses a local JSON file (:code:`~/.whatportis_db.json`) to explore the list of ports. You can synchronize it using the :code:`--update` option :
+Database Sync
+-------------
+
+Whatportis uses a local JSON file (:code:`~/.whatportis_db.json`) to explore the list of ports. The first usage will create it for you, then you can use the :code:`--update` option to synchronize it :
 
 .. code-block:: shell
 
