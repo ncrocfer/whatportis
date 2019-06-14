@@ -2,6 +2,7 @@
 
 import csv
 import os
+import sys
 
 import click
 import requests
@@ -13,6 +14,29 @@ from whatportis.utils import as_table
 
 
 IANA_CSV_FILE = "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv"
+
+
+def unicode_csv_reader(data):
+    """
+    Handle Unicode CSV data
+    See: https://docs.python.org/2/library/csv.html
+    """
+    def utf_8_encoder(unicode_csv_data):
+        for line in unicode_csv_data:
+            yield line.encode('utf-8')
+
+    csv_reader = csv.reader(utf_8_encoder(data))
+    for row in csv_reader:
+        yield [unicode(cell, 'utf-8') for cell in row]
+
+
+def csv_reader(data):
+    """
+    Return the correct handler according to python version.
+    """
+    if sys.version_info[0] == 3:
+        return csv.reader(data)
+    return unicode_csv_reader(data)
 
 
 def update_db(ctx, param, value):
@@ -31,7 +55,7 @@ def update_db(ctx, param, value):
     # Download the csv
     click.echo("Downloading {}...".format(IANA_CSV_FILE))
     resp = requests.get(IANA_CSV_FILE).content.decode("utf-8")
-    data = csv.reader(resp.splitlines())
+    data = csv_reader(resp.splitlines())
 
     # Populate the json
     click.echo("Populating database...")
