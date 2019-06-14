@@ -13,6 +13,9 @@ whatportis
 .. image:: https://img.shields.io/github/license/ncrocfer/whatportis.svg
    :target: https://github.com/ncrocfer/whatportis/blob/master/LICENSE.txt
 
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+   :target: https://github.com/python/black
+
 It's a common task to search the default port number of a service. Some ports are available in the :code:`/etc/services` file, but the list is not complete and this solution is not portable.
 
 Whatportis is a simple tool that downloads the `Iana.org <http://www.iana.org/assignments/port-numbers>`_ database and uses it to explore the official list of ports.

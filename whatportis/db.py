@@ -11,7 +11,7 @@ Port = namedtuple("Port", ["name", "port", "protocol", "description"])
 
 
 def get_database():
-    path = os.path.join(os.path.expanduser('~'), ".whatportis_db.json")
+    path = os.path.join(os.path.expanduser("~"), ".whatportis_db.json")
     return TinyDB(path, storage=CachingMiddleware(JSONStorage))
 
 
@@ -26,7 +26,9 @@ def merge_protocols(ports=[]):
     """
     keys = {}
     for port in ports:
-        key = "{}-{}-{}".format(port.get("description"), port.get("name"), port.get("port"))
+        key = "{}-{}-{}".format(
+            port.get("description"), port.get("name"), port.get("port")
+        )
         if key not in keys:
             keys[key] = port
         else:
@@ -53,4 +55,4 @@ def get_ports(port, like=False):
         ports = db.search(where(where_field) == port)
 
     ports = merge_protocols(ports)
-    return [Port(**port) for port in ports] # flake8: noqa (F812)
+    return [Port(**port) for port in ports]  # flake8: noqa (F812)
