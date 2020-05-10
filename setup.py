@@ -18,11 +18,11 @@ setup(
     packages=['whatportis'],
     include_package_data=True,
     install_requires=[
-        "simplejson",
-        "tinydb",
-        "requests",
-        "prettytable",
-        "click"
+        "simplejson==3.17.0",
+        "tinydb==3.15.1",
+        "requests==2.23.0",
+        "prettytable==0.7.2",
+        "click==7.1.2"
     ],
     extras_require={
         "dev": [
@@ -30,7 +30,7 @@ setup(
             "tox"
         ],
         "server": [
-            "flask"
+            "flask==1.1.2"
         ]
     },
     entry_points=entry_points,
