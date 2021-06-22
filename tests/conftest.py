@@ -17,19 +17,19 @@ def create_ports(tmpdir, monkeypatch):
     def _create_ports(ports):
         def get_db():
             tmp_db = tmpdir.join("db.json")
-            db = TinyDB(
-                str(tmp_db),
-                storage=CachingMiddleware(JSONStorage)
-            )
+            db = TinyDB(str(tmp_db), storage=CachingMiddleware(JSONStorage))
 
             for port in ports:
-                db.insert({
-                    'name': port[0],
-                    'port': port[1],
-                    "description": port[2],
-                    "protocol": port[3]
-                })
+                db.insert(
+                    {
+                        "name": port[0],
+                        "port": port[1],
+                        "description": port[2],
+                        "protocol": port[3],
+                    }
+                )
             return db
 
         return monkeypatch.setattr(whatportis.db, "get_database", get_db)
-    return  _create_ports
+
+    return _create_ports
