@@ -27,7 +27,8 @@ setup(
     extras_require={
         "dev": [
             "pytest",
-            "tox"
+            "tox",
+            "black"
         ],
         "server": [
             "flask==1.1.2"
