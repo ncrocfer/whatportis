@@ -18,11 +18,11 @@ setup(
     packages=['whatportis'],
     include_package_data=True,
     install_requires=[
-        "simplejson==3.17.0",
-        "tinydb==3.15.1",
-        "requests==2.23.0",
-        "prettytable==0.7.2",
-        "click==7.1.2"
+        "simplejson==3.17.2",
+        "tinydb==4.4.0",
+        "requests==2.25.1",
+        "prettytable==2.1.0",
+        "click==8.0.1"
     ],
     extras_require={
         "dev": [

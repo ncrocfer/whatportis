@@ -60,7 +60,7 @@ def populate_db():
         )
 
     db = get_database()
-    db.purge()
+    db.truncate()
     db.insert_multiple(ports)
     db.close()
 
