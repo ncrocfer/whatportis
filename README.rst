@@ -7,7 +7,7 @@ whatportis
 .. image:: https://badge.fury.io/py/whatportis.svg
    :target: https://pypi.python.org/pypi/whatportis/
 
-.. image:: https://img.shields.io/badge/python-2.x%20|%C2%A03.x-blue.svg
+.. image:: https://img.shields.io/badge/python-3.6%2B-blue.svg
    :target: https://pypi.python.org/pypi/whatportis/
 
 .. image:: https://img.shields.io/github/license/ncrocfer/whatportis.svg
