@@ -1,8 +1,8 @@
 whatportis
 ==========
 
-.. image:: https://travis-ci.org/ncrocfer/whatportis.svg?branch=master
-   :target: https://travis-ci.org/ncrocfer/whatportis
+.. image:: https://github.com/opencve/opencve/workflows/Tests/badge.svg
+   :target: https://github.com/ncrocfer/whatportis/actions/workflows/tests.yml
 
 .. image:: https://badge.fury.io/py/whatportis.svg
    :target: https://pypi.python.org/pypi/whatportis/
