@@ -20,7 +20,7 @@ setup(
     install_requires=[
         "simplejson==3.17.2",
         "tinydb==4.4.0",
-        "requests==2.25.1",
+        "requests==2.31.0",
         "prettytable==2.1.0",
         "click==8.0.1"
     ],
